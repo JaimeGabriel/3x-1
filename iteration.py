@@ -3,6 +3,7 @@ import csv
 import numpy as np
 import math
 from tqdm import tqdm
+import os
 
 #----------------------------------------------- Parámetros de la ejecución ----------------------------------------------------------------
 
@@ -16,7 +17,7 @@ rango = True # True si queremos hacer el cálculo para un intervalo entre dos va
              # valores queremos iterar, por ejemplo, [10, 4, 7564, 2345346]
 # Si hemos elegido rango = True, elegir los valores iniciales y finales del intervalo. Si rango = False estos valores no intervienen en el programa
 valor_inicial = 1
-valor_final = pow(10, 6)
+valor_final = pow(10, 3)
 # Si hemos elegido rango = False, elegir los valores que queremos iterar introduciéndolos en el siguiente vector. Si rango = True, el vector
 # no interviene en ningún cálculo
 vector_iterar = [1346, pow(10, 50) - 1, pow(10, 500) + 1]
@@ -37,8 +38,13 @@ aux = 0
 
 #--------------------------------------------------- Bucle de ejecución -------------------------------------------------------------------
 
+ruta_completa = os.path.join('Data', nombre_archivo)
 
-with open(nombre_archivo, mode='w', newline='') as archivo_csv:
+if os.path.isdir('Data') == False:
+            os.makedirs('Data')
+            print('Se ha creado la carpeta "Data"')
+
+with open(ruta_completa, mode='w', newline='') as archivo_csv:
     escritor_csv = csv.writer(archivo_csv)
     encabezado = ['Número', 'secuencia'] # Primero fila del .csv
     #encabezado  = ['secuencia']
@@ -82,7 +88,7 @@ with open(nombre_archivo, mode='w', newline='') as archivo_csv:
         aux = aux + proporcion_pares
         error_modelo += np.abs(len(secuencia) - 6.952 * math.log(n_inicial)) / len(secuencia) * 100
 
-
+        
 
         if guardar is True:
             # Elegimos qué cantidades queremos guardar. Si se cambia, acordarse de cambiar el encabezado del archivo
