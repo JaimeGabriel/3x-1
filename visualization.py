@@ -3,6 +3,7 @@ import pandas as pd
 from tqdm import tqdm
 import ast
 import matplotlib.pyplot as plt
+import os 
 
 
 encodings = ['utf-8', 'latin1', 'ISO-8859-1']
@@ -83,11 +84,18 @@ for secuencia in tqdm(secuencias, desc=f'Obteniendo vectores para hacer el gráf
 
 
 
+
+
 color_grafico = 'seagreen'
 plt.figure(figsize=(11.69, 8.26), facecolor='black')
 plt.axis('off')  # Elimina los ejes
 for i in tqdm(range(len(x)), desc=f'Pintando', unit=" secuencia"):
     plt.plot(x[i], y[i], alpha = 0.02, color = color_grafico, linewidth=0.5)
+
+
+if os.path.isdir('Figures') == False:
+    os.makedirs('Figures')
+    print('Se ha creado la carpeta "Figures"')
 
 print('Generando imagen (esto puede tardar un rato)')
 plt.savefig(f'Figures/visualization_color_{color_grafico}_len_{len(secuencias)}_par_{denominador_par}_impar_{denominador_impar}.pdf', bbox_inches='tight')
